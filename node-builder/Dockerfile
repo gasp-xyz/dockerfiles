@@ -17,13 +17,18 @@ WORKDIR /builds
 
 # install tools and dependencies
 RUN set -eux && \
-	# Install mold linker
-	curl -L https://github.com/rui314/mold/releases/download/v1.7.0/mold-1.7.0-$(uname -m)-linux.tar.gz \
-	| tar -C /usr/local --strip-components=1 -xzf - && ln -sf /usr/local/bin/mold "$(realpath /usr/bin/ld)" && \
-	# Install sccache
-	curl -L https://github.com/mozilla/sccache/releases/download/v0.3.1/sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz -O && \
-	tar -C /usr/local/bin --strip-components=1 --wildcards "*sccache" -xzf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz && \
-	chmod +x /usr/local/bin/sccache && rm -rf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz
+		apt-get -y update; \
+		apt-get install -y --no-install-recommends \
+		libssl-dev make cmake graphviz clang libclang-dev llvm \
+		git pkg-config curl time rhash ca-certificates \
+		python3 python3-pip lsof ruby ruby-bundler git-restore-mtime xz-utils unzip gnupg protobuf-compiler && \
+		# Install mold linker
+		curl -L https://github.com/rui314/mold/releases/download/v1.7.0/mold-1.7.0-$(uname -m)-linux.tar.gz \
+		| tar -C /usr/local --strip-components=1 -xzf - && ln -sf /usr/local/bin/mold "$(realpath /usr/bin/ld)" && \
+		# Install sccache
+		curl -L https://github.com/mozilla/sccache/releases/download/v0.3.1/sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz -O && \
+		tar -C /usr/local/bin --strip-components=1 --wildcards "*sccache" -xzf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz && \
+		chmod +x /usr/local/bin/sccache && rm -rf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz
 
 ENV RUST_TOOLCHAIN=nightly-2022-10-10
 
