@@ -20,7 +20,7 @@ RUN set -eux && \
 		apt-get -y update; \
 		apt-get install -y --no-install-recommends \
 		libssl-dev make cmake graphviz clang libclang-dev llvm \
-		git pkg-config curl time rhash ca-certificates \
+		git pkg-config curl time rhash ca-certificates zstd \
 		python3 python3-pip lsof ruby ruby-bundler git-restore-mtime xz-utils unzip gnupg protobuf-compiler && \
 		# Install mold linker
 		curl -L https://github.com/rui314/mold/releases/download/v1.7.0/mold-1.7.0-$(uname -m)-linux.tar.gz \
@@ -28,13 +28,24 @@ RUN set -eux && \
 		# Install sccache
 		curl -L https://github.com/mozilla/sccache/releases/download/v0.3.1/sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz -O && \
 		tar -C /usr/local/bin --strip-components=1 --wildcards "*sccache" -xzf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz && \
-		chmod +x /usr/local/bin/sccache && rm -rf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz
+		chmod +x /usr/local/bin/sccache && rm -rf sccache-v0.3.1-$(uname -m)-unknown-linux-musl.tar.gz && \
+		# Install Nodejs
+		curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs && \
+		# Install Docker tools
+		curl -fsSL https://get.docker.com | sh && \
+		# apt clean up
+		apt-get autoremove -y && \
+		apt-get clean && \
+		rm -rf /var/lib/apt/lists/* && \
+		# cargo clean up
+		# removes compilation artifacts cargo install creates (>250M)
+		rm -rf "${CARGO_HOME}/registry" "${CARGO_HOME}/git"
 
-ENV RUST_TOOLCHAIN=nightly-2022-10-10
+ARG RUST_TOOLCHAIN=nightly-2022-11-21
 
 RUN rustup install $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN && \
-	rustup target add wasm32-unknown-unknown
-
+	rustup target add wasm32-unknown-unknown && \
+	rustup component add rust-src rustfmt clippy
 
 # cache handler
 ENV	RUSTC_WRAPPER=sccache \
