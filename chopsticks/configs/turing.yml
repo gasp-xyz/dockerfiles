@@ -1,0 +1,13 @@
+port: 9947
+endpoint: wss://rpc.turing.oak.tech
+mock-signature-host: true
+db: ./turing.db.sqlite
+
+import-storage:
+  System:
+    Account:
+      - - - 5Gxk3eGqEcMGR96XFoeJd3pdo2G5uUwzFszbGg8jvS7PDnnR
+        - data:
+            free: 10000000000000 # 1K TUR
+  Council:
+    Members: [5Gxk3eGqEcMGR96XFoeJd3pdo2G5uUwzFszbGg8jvS7PDnnR]

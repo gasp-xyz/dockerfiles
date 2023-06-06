@@ -1,0 +1,13 @@
+port: 9950
+endpoint: wss://imbue-kusama.imbue.network
+mock-signature-host: true
+db: ./imbue.db.sqlite
+
+import-storage:
+  System:
+    Account:
+      - - - 5Gxk3eGqEcMGR96XFoeJd3pdo2G5uUwzFszbGg8jvS7PDnnR
+        - data:
+            free: 1000000000000000 # 1K IMBU
+  Council:
+    Members: [5Gxk3eGqEcMGR96XFoeJd3pdo2G5uUwzFszbGg8jvS7PDnnR]

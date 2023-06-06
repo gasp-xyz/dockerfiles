@@ -1,0 +1,1 @@
+# Image to run `chopsticks` as a remote environment

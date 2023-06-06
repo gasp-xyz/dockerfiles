@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  chopsticks:
+    build: .
+    image: mangatasolutions/chopsticks:0.6.5
+    ports:
+      - 9944:9944 # kusama
+      - 9946:9946 # mangata
+      - 9947:9947 # turing
+      - 9948:9948 # statemine
+      - 9949:9949 # bifrost
+      - 9950:9950 # imbue
