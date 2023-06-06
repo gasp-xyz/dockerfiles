@@ -3,6 +3,7 @@ endpoint: wss://kusama-rpc.mangata.online
 mock-signature-host: true
 block: ${env.MANGATA_BLOCK_NUMBER}
 db: ./data/mangata.db.sqlite
+runtime-log-level: 5
 
 registered-types:
     types:
