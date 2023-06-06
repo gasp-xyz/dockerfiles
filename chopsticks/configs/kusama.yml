@@ -2,7 +2,7 @@ port: 9944
 endpoint: wss://kusama-rpc.dwellir.com
 mock-signature-host: true
 block: ${env.KUSAMA_BLOCK_NUMBER}
-db: ./db.sqlite
+db: ./data/kusama.db.sqlite
 # wasm-override: kusama_runtime-v9380.compact.compressed.wasm
 
 import-storage:

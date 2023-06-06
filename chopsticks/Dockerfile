@@ -1,6 +1,7 @@
 FROM --platform=amd64 node:18-alpine
 
 WORKDIR /app
+VOLUME /app/data
 
 RUN yarn add @acala-network/chopsticks@0.6.5
 

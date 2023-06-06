@@ -1,7 +1,7 @@
 port: 9950
 endpoint: wss://imbue-kusama.imbue.network
 mock-signature-host: true
-db: ./imbue.db.sqlite
+db: ./data/imbue.db.sqlite
 
 import-storage:
   System:

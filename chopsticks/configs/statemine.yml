@@ -2,7 +2,7 @@ port: 9948
 endpoint: wss://statemine-rpc.polkadot.io
 mock-signature-host: true
 block: ${env.STATEMINE_BLOCK_NUMBER}
-db: ./db.sqlite
+db: ./data/statemine.db.sqlite
 
 import-storage:
   System:

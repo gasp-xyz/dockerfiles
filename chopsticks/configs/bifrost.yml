@@ -1,7 +1,7 @@
 port: 9949
 endpoint: wss://bifrost-rpc.dwellir.com
 mock-signature-host: true
-db: ./bifrost.db.sqlite
+db: ./data/bifrost.db.sqlite
 
 import-storage:
   System:

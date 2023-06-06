@@ -2,7 +2,7 @@ port: 9946
 endpoint: wss://kusama-rpc.mangata.online
 mock-signature-host: true
 block: ${env.MANGATA_BLOCK_NUMBER}
-db: ./mangata.db.sqlite
+db: ./data/mangata.db.sqlite
 
 registered-types:
     types:

@@ -1,7 +1,7 @@
 port: 9947
 endpoint: wss://rpc.turing.oak.tech
 mock-signature-host: true
-db: ./turing.db.sqlite
+db: ./data/turing.db.sqlite
 
 import-storage:
   System:
