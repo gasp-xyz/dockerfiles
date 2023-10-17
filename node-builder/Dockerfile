@@ -41,7 +41,8 @@ ARG RUST_TOOLCHAIN=nightly-2022-11-21
 RUN rustup install $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN && \
 	rustup target add wasm32-unknown-unknown && \
 	rustup component add rust-src rustfmt clippy && \
-	cargo install subalfred --version 0.9.0-rc19 && \
+	cargo install --git https://github.com/paritytech/try-runtime-cli --tag v0.3.3 --locked && \
+	# cargo install subalfred --version 0.9.0-rc19 && \
 	# cargo clean up
 	# removes compilation artifacts cargo install creates (>250M)
 	rm -rf "${CARGO_HOME}/registry" "${CARGO_HOME}/git"
