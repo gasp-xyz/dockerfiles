@@ -1,4 +1,4 @@
-FROM rust:1.65-buster
+FROM rust:1.71-buster
 
 # metadata
 LABEL summary="Image for Rust and WASM compilation." \
@@ -36,7 +36,7 @@ RUN set -eux && \
 		# apt clean up
 		apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ARG RUST_TOOLCHAIN=nightly-2022-11-21
+ARG RUST_TOOLCHAIN=nightly-2023-05-22
 
 RUN rustup install $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN && \
 	rustup target add wasm32-unknown-unknown && \
