@@ -1,4 +1,4 @@
-FROM rust:1.71-buster
+FROM rust:1.77-buster
 
 # metadata
 LABEL summary="Image for Rust and WASM compilation." \
@@ -36,12 +36,12 @@ RUN set -eux && \
 		# apt clean up
 		apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ARG RUST_TOOLCHAIN=nightly-2023-05-22
+ARG RUST_TOOLCHAIN=nightly-2024-03-24
 
 RUN rustup install $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN && \
 	rustup target add wasm32-unknown-unknown && \
 	rustup component add rust-src rustfmt clippy && \
-	cargo install --git https://github.com/paritytech/try-runtime-cli --tag v0.3.3 --locked && \
+	# cargo install --git https://github.com/paritytech/try-runtime-cli --tag v0.3.3 --locked && \
 	# cargo install subalfred --version 0.9.0-rc19 && \
 	# cargo clean up
 	# removes compilation artifacts cargo install creates (>250M)
