@@ -2,5 +2,5 @@
 
 ```bash
 # build and push latest image
-docker buildx build -t mangatasolutions/github-actions-runner:latest--push .
+docker buildx build -t mangatasolutions/github-actions-runner:latest --push .
 ```
