@@ -13,8 +13,9 @@ docker buildx create --use --name custom-builder
 # Latest:
 docker buildx build --platform linux/arm64,linux/amd64 -t mangatasolutions/node-builder:multi --push .
 # Specific toolchain:
-export RUST_TOOLCHAIN=1.78.0
-docker buildx build --platform linux/arm64,linux/amd64 --build-arg RUST_TOOLCHAIN=${RUST_TOOLCHAIN} -t mangatasolutions/node-builder:multi-${RUST_TOOLCHAIN} --push .
+export RUST_VERSION=1.77
+export RUST_TOOLCHAIN=nightly-2024-01-20
+docker buildx build --platform linux/arm64,linux/amd64 --build-arg RUST_TOOLCHAIN=${RUST_TOOLCHAIN} --build-arg RUST_VERSION=${RUST_VERSION} -t mangatasolutions/node-builder:multi-${RUST_VERSION}-${RUST_TOOLCHAIN} --push .
 ```
 
 ## Some caveats
