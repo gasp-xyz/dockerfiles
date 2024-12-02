@@ -2,5 +2,5 @@
 
 ```bash
 # build and push latest image
-docker buildx build -t mangatasolutions/github-actions-runner:latest --platform linux/amd64,linux/arm64 --push .
+docker buildx build -t gaspxyz/github-actions-runner:latest --platform linux/amd64,linux/arm64 --push .
 ```
