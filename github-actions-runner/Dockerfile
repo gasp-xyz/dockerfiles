@@ -62,3 +62,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 # Clean up
 RUN sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
+
+# https://github.com/sfackler/rust-openssl/issues/2333
+RUN sudo ln -s /usr/include/x86_64-linux-gnu/openssl/opensslconf.h /usr/include/openssl/opensslconf.h && \
+    sudo ln -s /usr/include/x86_64-linux-gnu/openssl/configuration.h /usr/include/openssl/configuration.h
