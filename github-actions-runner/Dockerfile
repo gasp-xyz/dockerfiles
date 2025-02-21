@@ -14,7 +14,21 @@ RUN sudo apt update -y && \
     clang \
     zstd \
     qemu-user-static \
-    binfmt-support
+    binfmt-support \
+    protobuf-compiler
+
+# Install Zig (Direct Download - Multi-Platform)
+ARG ZIG_VERSION=0.13.0
+ARG TARGETPLATFORM
+RUN case ${TARGETPLATFORM} in \
+        linux/amd64)  ZIG_ARCH=x86_64   ;; \
+        linux/arm64)  ZIG_ARCH=aarch64  ;; \
+        *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
+    esac && \
+    curl -o zig.tar.xz "https://ziglang.org/download/${ZIG_VERSION}/zig-linux-${ZIG_ARCH}-${ZIG_VERSION}.tar.xz" && \
+    tar -xf zig.tar.xz && \
+    sudo mv "zig-linux-${ZIG_ARCH}-${ZIG_VERSION}" /usr/local/zig && \
+    sudo ln -s /usr/local/zig/zig /usr/local/bin/zig
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
