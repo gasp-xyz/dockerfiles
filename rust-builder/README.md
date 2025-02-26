@@ -17,9 +17,9 @@ docker buildx create --use --name custom-builder
 # Latest:
 docker buildx build --platform linux/arm64,linux/amd64 -t gaspxyz/rust-builder:multi --push .
 # Specific toolchain:
-export RUST_VERSION=1.77
-export RUST_TOOLCHAIN=nightly-2024-01-20
+export RUST_VERSION=1.77 && export RUST_TOOLCHAIN=nightly-2024-01-20
 docker buildx build --platform linux/arm64,linux/amd64 --build-arg RUST_TOOLCHAIN=${RUST_TOOLCHAIN} --build-arg RUST_VERSION=${RUST_VERSION} -t gaspxyz/rust-builder:multi-${RUST_VERSION}-${RUST_TOOLCHAIN} --push .
+docker buildx build --platform linux/arm64,linux/amd64 --build-arg RUST_TOOLCHAIN=${RUST_TOOLCHAIN} --build-arg RUST_VERSION=${RUST_VERSION} -t gaspxyz/rust-builder:multi-${RUST_VERSION}-${RUST_TOOLCHAIN}-slim -f Dockerfile-slim --push .
 ```
 
 ## Some caveats

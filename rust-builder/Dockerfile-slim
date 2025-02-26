@@ -23,14 +23,10 @@ RUN set -eux && \
 		apt-get install -y --no-install-recommends \
 		libssl-dev make cmake graphviz clang libclang-dev llvm \
 		git pkg-config curl time rhash ca-certificates zstd \
-		python3 python3-pip lsof ruby ruby-bundler git-restore-mtime xz-utils unzip gnupg protobuf-compiler && \
+		python3 python3-pip lsof git-restore-mtime xz-utils unzip gnupg protobuf-compiler && \
 		# Install mold linker
 		curl -L https://github.com/rui314/mold/releases/download/v2.36.0/mold-2.36.0-$(uname -m)-linux.tar.gz \
 		| tar -C /usr/local --strip-components=1 -xzf - && ln -sf /usr/local/bin/mold "$(realpath /usr/bin/ld)" && \
-		# Install sccache
-		curl -L https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-$(uname -m)-unknown-linux-musl.tar.gz -O && \
-		tar -C /usr/local/bin --strip-components=1 --wildcards "*sccache" -xzf sccache-v0.10.0-$(uname -m)-unknown-linux-musl.tar.gz && \
-		chmod +x /usr/local/bin/sccache && rm -rf sccache-v0.10.0-$(uname -m)-unknown-linux-musl.tar.gz && \
 		# Install Nodejs
 		curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y --no-install-recommends nodejs && \
 		# Install Docker tools with buildx
@@ -38,15 +34,15 @@ RUN set -eux && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     apt-get update && \
     apt-get install -y --no-install-recommends docker-ce-cli docker-buildx-plugin docker-compose-plugin && \
-		# Install Google Cloud CLI
-		echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-    apt-get update -y && apt-get install -y --no-install-recommends google-cloud-cli google-cloud-cli-gke-gcloud-auth-plugin kubectl && \
-		# # Install moonrepo `proto` binary
-		# curl -fsSL https://moonrepo.dev/install/proto.sh -o /tmp/proto_install.sh && chmod +x /tmp/proto_install.sh && \
-		# bash /tmp/proto_install.sh 0.47.1 --yes && rm /tmp/proto_install.sh && \
-		# apt clean up
+		# Install Golang
+		curl -L https://go.dev/dl/go1.21.13.linux-$(dpkg --print-architecture).tar.gz | tar -C /usr/local -xzf - && \
+    ln -sf /usr/local/go/bin/go /usr/local/bin/go && \
+		ln -sf /usr/local/go/bin/gofmt /usr/local/bin/gofmt && \
+	# apt clean up
 		apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add Go to PATH
+ENV PATH="/usr/local/go/bin:${PATH}"
 
 ARG RUST_TOOLCHAIN=nightly-2024-01-20
 RUN rustup install $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN && \
